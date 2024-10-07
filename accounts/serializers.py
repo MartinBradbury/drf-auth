@@ -5,14 +5,15 @@ from django.contrib.auth import authenticate
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUserAuth
-        fields = ('email', 'username', 'password')
+        fields = ('email', 'username', 'id')
         
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
+    
     class Meta:
         model = CustomUserAuth
         fields = ('email', 'username', 'password1', 'password2', 'id')
-        
         extra_kwargs = {'password' : {"write_only": True}}
         
         def validate(self, attrs):
